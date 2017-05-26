@@ -20,6 +20,11 @@
 <input type="submit" name="getNewFormat" value="Hämta full-formats te-fil">
 </form>
 <hr/>
+<form action="Upload" method="post" enctype="multipart/form-data">
+<input type="file" name="teas" size="60"><br>
+<input type="submit" name="load" value="Ladda upp te-fil">
+</form>
+<hr/>
 <% 
 String msg = (String) session.getAttribute("admin_message");
 if (msg != null) {

@@ -164,19 +164,23 @@ public class AddTea extends HttpServlet {
 			BrewedTeas brewedTeas = BrewedTeas.instance();
 			File reloadFrom = new File(brewedTeas.getlogFileDir(), fileName);
 			InputStream fis = new FileInputStream(reloadFrom);
-			InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
-			BufferedReader br = new BufferedReader(isr);
-			String line;
-			while ((line = br.readLine()) != null) {
-				Tea tea = Tea.parse(line);
-				if (tea != null) {
-					brewedTeas.addTea(tea);
-					logTeaToFile(tea, logFile);
-				}
-			}
+			reloadTeasFromStream(brewedTeas, fis);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
+	}
+
+	public static void reloadTeasFromStream(BrewedTeas brewedTeas, InputStream fis) throws IOException {
+		InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
+		BufferedReader br = new BufferedReader(isr);
+		String line;
+		while ((line = br.readLine()) != null) {
+			Tea tea = Tea.parse(line);
+			if (tea != null) {
+				brewedTeas.addTea(tea);
+				logTeaToFile(tea, logFile);
+			}
 		}
 	}
 }
