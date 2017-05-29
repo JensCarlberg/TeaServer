@@ -5,7 +5,6 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -38,7 +37,7 @@ public class AddTea extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static File logFile;
 	private static String lineSeparator;
-	
+
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -54,7 +53,7 @@ public class AddTea extends HttpServlet {
     	getLogFile();
     	System.out.println("AddTea initiated.");
     }
-    
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -98,7 +97,7 @@ public class AddTea extends HttpServlet {
     private synchronized void logTea(Tea tea) {
     	logTeaToFile(tea, getLogFile());
     }
-    
+
     private static synchronized void logTeaToFile(Tea tea, File file) {
     	OutputStream outStream = null;
     	Writer writer = null;
@@ -124,7 +123,8 @@ public class AddTea extends HttpServlet {
 
 	public synchronized File getLogFile() {
 		if (logFile == null) {
-			String realPath = getServletContext().getRealPath("brewed-teas-full.log");
+			ServletContext servletContext = getServletContext();
+            String realPath = servletContext.getRealPath("/brewed-teas-full.log");
 			System.out.println("Full log file at " + realPath);
 			logFile = new File(realPath);
 		}

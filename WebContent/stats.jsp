@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="js/sorttable.js" type="text/javascript"></script>
 <title>Teserver Statistik</title>
 </head>
 <body>
@@ -16,7 +17,15 @@ Antal bryggda kannor: <%= BrewedTeas.instance().noOfTeas() %>
 <%
 String[][] teaStats = BrewedTeas.instance().sumTeaDay();
 String[] bgColours = new String[] { "#eee", "#ccc" };
-for (int i=0; i<teaStats.length; i++) {
+out.print("<tr bgcolor='" + bgColours[0] + "'>");
+for (int j=0; j<teaStats[0].length; j++) {
+    String sortable = j ==  0 ? "sortable" : "sortable-numeric";
+    out.print("<th class='" + sortable + "'>");
+    out.print(teaStats[0][j]);
+    out.print("</th>");
+}
+out.print("</tr>");
+for (int i=1; i<teaStats.length; i++) {
     out.print("<tr bgcolor='" + bgColours[i % bgColours.length] + "'>");
     for (int j=0; j<teaStats[i].length; j++) {
         out.print("<td>");

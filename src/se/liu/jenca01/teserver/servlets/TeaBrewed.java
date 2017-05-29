@@ -51,7 +51,7 @@ public final class TeaBrewed extends HttpServlet {
 	private synchronized File getLogFile() {
 		if (logFile == null) {
 			ServletContext servletContext = getServletContext();
-			String realPath = servletContext.getRealPath("brewed-teas.log");
+			String realPath = servletContext.getRealPath("/brewed-teas.log");
 			System.out.println("Log file at " + realPath);
 			logFile = new File(realPath);
 		}

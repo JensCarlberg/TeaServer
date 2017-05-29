@@ -14,6 +14,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -264,25 +265,30 @@ public class BrewedTeas {
 
     private String blankNull(Double value) {
         if (value == null) return "";
-        return value + "";
+        return formatDouble(value);
+    }
+
+    private String formatDouble(Double value) {
+        return String.format(Locale.ROOT, "%.1f", value);
     }
 
     private void addEmptyCorners(String[][] result) {
         result[0][0] = "";
-        result[0][result[0].length - 1] = "";
-        result[result.length - 1][0] = "";
+        result[0][0] = "Te";
+        result[0][result[0].length - 1] = "Summa:";
+        result[result.length - 1][0] = "Summa:";
     }
 
     private void addTeaSums(String[][] result, Map<String, Double> sumPerTea) {
         int pos = 1;
         for (String tea : sumPerTea.keySet())
-            result[pos++][result[0].length - 1] = sumPerTea.get(tea) + "";
+            result[pos++][result[0].length - 1] = formatDouble(sumPerTea.get(tea));
     }
 
     private void addDaySums(String[][] result, Map<String, Double> sumPerDay) {
         int pos = 1;
         for (String tea : sumPerDay.keySet())
-            result[result.length - 1][pos++] = sumPerDay.get(tea) + "";
+            result[result.length - 1][pos++] = formatDouble(sumPerDay.get(tea));
     }
 
     private void addTeaRows(String[][] result, Set<String> brewedTeas) {
