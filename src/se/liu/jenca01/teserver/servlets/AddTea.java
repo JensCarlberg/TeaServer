@@ -14,8 +14,13 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -43,12 +48,10 @@ public class AddTea extends HttpServlet {
      */
     public AddTea() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-    	// TODO Auto-generated method stub
     	super.init(config);
     	getLogFile();
     	System.out.println("AddTea initiated.");
@@ -131,6 +134,19 @@ public class AddTea extends HttpServlet {
 		return logFile;
 	}
 
+	private static synchronized List<String> getAllTeasFromLogFile() {
+		try {
+			return Files.readAllLines(logFile.toPath(), StandardCharsets.UTF_8);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
+	}
+	
+	public static String getAllTeas() {
+		return String.join("\n", getAllTeasFromLogFile());
+	}
+	
 	public static void removeLogFile() {
 		if (logFile == null) return;
 		try {
@@ -177,6 +193,18 @@ public class AddTea extends HttpServlet {
 		String line;
 		while ((line = br.readLine()) != null) {
 			Tea tea = Tea.parse(line);
+			if (tea != null) {
+				brewedTeas.addTea(tea);
+				logTeaToFile(tea, logFile);
+			}
+		}
+	}
+
+	public static void reloadTeasFromArray(String[] teas) {
+		BrewedTeas brewedTeas = BrewedTeas.instance();
+		for (String line: teas) {
+			String trimmedLine = line.trim();
+			Tea tea = Tea.parse(trimmedLine);
 			if (tea != null) {
 				brewedTeas.addTea(tea);
 				logTeaToFile(tea, logFile);

@@ -30,11 +30,17 @@ public final class Admin extends HttpServlet {
 	 */
 	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String submit = reqValues(request, new String[] {"clear", "reload", "reloadNewFormat", "remove", "get", "getNewFormat" });
+	    String submit = reqValues(request, new String[] {"clear", "save", "reload", "reloadNewFormat", "remove", "get", "getNewFormat" });
         switch (submit) {
 	        case "clear":
 	            brewedTeas().clearTeas();
 	            setAdminMessage(request, "Listan med téer tömd.");
+	            break;
+	        case "save":
+	        	brewedTeas().clearTeas();
+	        	brewedTeas().removeLogFile();
+	            AddTea.reloadTeasFromArray(request.getParameter("all-teas").split("\n"));
+	            setAdminMessage(request, "Sparat.");
 	            break;
 	        case "reload":
 	            brewedTeas().reloadTeas();
@@ -52,11 +58,13 @@ public final class Admin extends HttpServlet {
 	            break;
 	        case "get":
 	            response.setContentType("text/plain");
+	            response.setCharacterEncoding("UTF-8");
 	            brewedTeas().copyLogFileToStream(response.getOutputStream());
 	            response.flushBuffer();
 	            return;
 	        case "getNewFormat":
 	            response.setContentType("text/plain");
+	            response.setCharacterEncoding("UTF-8");
 	            AddTea.copyLogFileToStream(response.getOutputStream());
 	            response.flushBuffer();
 	            return;

@@ -1,6 +1,7 @@
 package se.liu.jenca01.teserver.servlets;
 
 import java.io.IOException;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -22,7 +23,7 @@ public final class Upload extends HttpServlet {
 	    Part teas = request.getPart("teas");
         brewedTeas().clearTeas();
         AddTea.reloadTeasFromStream(brewedTeas(), teas.getInputStream());
-        setAdminMessage(request, "Reloaded file");
+        setAdminMessage(request, new Date() + ": Reloaded file");
 	    response.sendRedirect("admin.jsp");
 	}
 
