@@ -144,7 +144,9 @@ public class AddTea extends HttpServlet {
 	}
 	
 	public static String getAllTeas() {
-		return String.join("\n", getAllTeasFromLogFile());
+		List<String> allTeasFromLogFile = getAllTeasFromLogFile();
+		String join = String.join("\n", allTeasFromLogFile);
+		return join;
 	}
 	
 	public static void removeLogFile() {
@@ -188,6 +190,7 @@ public class AddTea extends HttpServlet {
 	}
 
 	public static void reloadTeasFromStream(BrewedTeas brewedTeas, InputStream fis) throws IOException {
+		removeLogFile();
 		InputStreamReader isr = new InputStreamReader(fis, Charset.forName("UTF-8"));
 		BufferedReader br = new BufferedReader(isr);
 		String line;

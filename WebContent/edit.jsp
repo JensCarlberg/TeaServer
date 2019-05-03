@@ -11,7 +11,7 @@
 <p><a href="showLatestTeas.jsp">Till te-listan</a></p>
 <p><a href="stats.jsp">Till statistiken</a></p>
 <hr/>
-<form action="Admin" method="post">
+<form action="Admin" method="post" accept-charset="UTF-8">
   <input type="submit" name="save" value="Spara">
   <textarea name="all-teas" rows="<%= BrewedTeas.instance().noOfTeas() %>" cols="150"><%= AddTea.getAllTeas() %></textarea>
   <input type="submit" name="save" value="Spara">
