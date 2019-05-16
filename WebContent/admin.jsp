@@ -9,6 +9,7 @@
 <body>
 <p><a href="showLatestTeas.jsp">Till te-listan</a></p>
 <p><a href="stats.jsp">Till statistiken</a></p>
+<p><a href="edit.jsp">Editera téer</a></p>
 <hr/>
 <form action="Admin" method="post">
 <input type="submit" name="clear" value="Rensa gamla téer">
