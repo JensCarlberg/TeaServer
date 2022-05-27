@@ -28,6 +28,7 @@ import se.liu.jenca01.teserver.servlets.AddTea;
 
 
 public class BrewedTeas {
+	private static final int DAY_ENDS_AT_GMT = 4;
     private static final String DELIMITER = "\t";
     private static final String DATE_FORMAT = "yyyy-MM-dd HH.mm.ss";
     private static final String DAY_FORMAT = "yyyy-MM-dd";
@@ -179,7 +180,7 @@ public class BrewedTeas {
         Map<String, Double> sumPerTea = new TreeMap<>();
 
         for (Date date: teas.keySet())
-            addData(sdyf.format(dayEndsAt(date, 6)), teas.get(date), volumes.get(date),
+            addData(sdyf.format(dayEndsAt(date, DAY_ENDS_AT_GMT)), teas.get(date), volumes.get(date),
             		teaPerDay, brewTimes, brewedTeas, sumPerDay, sumPerTea);
 
         String[][] result = new String[brewedTeas.size() + 2][brewTimes.size() + 2];
@@ -201,7 +202,7 @@ public class BrewedTeas {
         Map<String, Double> sumPerTea = new TreeMap<>();
 
         for (Date date: teas.keySet())
-            addData(sdyf.format(dayEndsAt(date, 6)), teas.get(date), volumes.get(date),
+            addData(sdyf.format(dayEndsAt(date, DAY_ENDS_AT_GMT)), teas.get(date), volumes.get(date),
             		teaPerDay, brewTimes, brewedTeas, sumPerDay, sumPerTea);
 
         JSONObject result = new JSONObject();
