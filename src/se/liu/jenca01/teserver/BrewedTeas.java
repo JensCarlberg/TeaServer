@@ -22,6 +22,7 @@ import java.util.TreeSet;
 
 import javax.servlet.ServletOutputStream;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import se.liu.jenca01.teserver.servlets.AddTea;
@@ -101,7 +102,7 @@ public class BrewedTeas {
 
     private TreeSet<Date> latestTeaDates(int noOfTeas) {
         int noOfDates = Math.min(noOfTeas, teas.size());
-        TreeSet<Date> dates = new TreeSet<Date>();
+        TreeSet<Date> dates = new TreeSet<>();
         for (Date date : teas.descendingKeySet()) {
         	dates.add(date);
         	if (dates.size() == noOfDates) break;
@@ -191,6 +192,15 @@ public class BrewedTeas {
         addMatrix(result, teaPerDay, brewedTeas, brewTimes);
         addEmptyCorners(result);
         addGrandTotal(result, sumPerDay);
+        return result;
+    }
+
+    public JSONObject jsonBrewedTeaNames() {
+        Set<String> brewedTeas = new TreeSet<>(teas.values());
+        JSONArray teaNamesJsonArray = new JSONArray();
+        teaNamesJsonArray.addAll(brewedTeas);
+        JSONObject result = new JSONObject();
+		result.put("teaNames", teaNamesJsonArray);
         return result;
     }
 
