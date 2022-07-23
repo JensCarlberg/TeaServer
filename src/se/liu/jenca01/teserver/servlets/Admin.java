@@ -1,7 +1,6 @@
 package se.liu.jenca01.teserver.servlets;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

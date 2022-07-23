@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 import se.liu.jenca01.teserver.BrewedTeas;
 
@@ -38,7 +38,7 @@ public class JsonData extends HttpServlet {
 	private void writeJsonData(ServletOutputStream outputStream) throws IOException {
 		JSONObject obj = BrewedTeas.instance().jsonSumTeaDay();
 		OutputStreamWriter writer = new OutputStreamWriter(outputStream);
-		obj.writeJSONString(writer);
+		writer.write(obj.toString());
 		writer.close();
 	}
 

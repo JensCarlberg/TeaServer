@@ -22,7 +22,7 @@ import java.util.TreeSet;
 
 import javax.servlet.ServletOutputStream;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 import se.liu.jenca01.teserver.servlets.AddTea;
 
@@ -222,7 +222,7 @@ public class BrewedTeas {
 	private JSONObject addPerDay(Set<String> brewTimes, Map<String, Double> sumPerDay) {
     	JSONObject rowData = new JSONObject();
     	for (String day : brewTimes) {
-    		rowData.put(parseTime(day), sumPerDay.get(day));
+    		rowData.put("" + parseTime(day), sumPerDay.get(day));
     	}
 		return rowData;
 	}

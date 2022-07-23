@@ -3,6 +3,7 @@ package se.liu.jenca01.teserver;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,7 +15,7 @@ public class Tea {
         private String pot;
         private Double volume;
         private Date start;
-        private Long id;
+        private UUID id;
 
         public Builder fromRequest(HttpServletRequest request) {
     		String tea = request.getParameter("tea");
@@ -29,7 +30,7 @@ public class Tea {
     		if (pot != null) pot(pot);
     		if (volume != null) volume(Double.parseDouble(volume));
     		if (start != null) start(Long.parseLong(start));
-    		if (id != null) id(Long.parseLong(id));
+    		if (id != null) id(UUID.fromString(id));
 
 			return this;
 		}
@@ -39,7 +40,7 @@ public class Tea {
         public Builder pot(String pot) { this.pot = pot; return this; }
         public Builder volume(double volume) { this.volume = volume; return this; }
         public Builder start(long start) { this.start = new Date(start); return this; }
-        public Builder id(long id) { this.id = id; return this; }
+        public Builder id(UUID id) { this.id = id; return this; }
 
         public Tea build() throws InstantiationException {
         	if (tea == null) throw new InstantiationException("Missing tea");
@@ -47,7 +48,7 @@ public class Tea {
         	if (pot == null) pot = "";
         	if (volume == null) volume = 3.0;
         	if (start == null) start = new Date();
-        	if (id == null) id = start.getTime();
+        	if (id == null) id = UUID.randomUUID();
 
         	return new Tea(tea, type, pot, volume, start, id);
         }
@@ -58,9 +59,9 @@ public class Tea {
 	public final String pot;
 	public final double volume;
 	public final Date start;
-	public final long id;
+	public final UUID id;
 
-	public Tea(String tea, String type, String pot, double volume, Date start, long id) {
+	public Tea(String tea, String type, String pot, double volume, Date start, UUID id) {
 		name = tea;
 		this.type = type;
 		this.pot = pot;
@@ -84,7 +85,7 @@ public class Tea {
 					parts[4],
 					Double.parseDouble(parts[3]),
 					parseDate(parts[0]),
-					Long.parseLong(parts[5])
+					UUID.fromString(parts[5])
 					);
 		} catch (Exception e) {
 			System.err.println(String.format("Could not parse tea from '%s'", line));

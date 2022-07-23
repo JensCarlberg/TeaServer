@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -30,6 +29,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
 
 import se.liu.jenca01.teserver.BrewedTeas;
 import se.liu.jenca01.teserver.Tea;
@@ -89,12 +90,13 @@ public class AddTea extends HttpServlet {
 
 	private void sendResult(HttpServletResponse response, int resultCode, String msg) throws IOException {
 		response.setStatus(resultCode);
-		response.setContentType("text/plain");
+		response.setContentType("application/json");
+		JSONObject json = new JSONObject();
+		json.put("time", System.currentTimeMillis());
+		if (msg != null && msg.length() !=  0) json.put("message", msg);
 		PrintWriter writer = response.getWriter();
-		writer.println(String.format("Time: %s", System.currentTimeMillis()));
-		if (msg != null && msg.length() !=  0)
-			writer.println(String.format("Message: %s", msg));
-		writer.flush();
+		writer.println(json.toString());
+		writer.close();
 	}
 
     private synchronized void logTea(Tea tea) {
