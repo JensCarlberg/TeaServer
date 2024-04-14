@@ -217,6 +217,7 @@ public class BrewedTeas {
 
         JSONObject result = new JSONObject();
         result.put("total", calcGrandTotal(sumPerDay));
+        result.put("today", sumToday(brewTimes, sumPerDay));
         result.put("per-day", addPerDay(brewTimes, sumPerDay));
         result.put("per-tea", addPerTea(brewedTeas, sumPerTea));
         return result;
@@ -236,6 +237,10 @@ public class BrewedTeas {
     		rowData.put(parseTime(day), sumPerDay.get(day));
     	}
 		return rowData;
+	}
+
+	private double sumToday(Set<String> brewTimes, Map<String, Double> sumPerDay) {
+		return sumPerDay.get(sdyf.format(new Date()));
 	}
 
 	private long parseTime(String day) {

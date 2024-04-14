@@ -31,7 +31,7 @@ public final class Admin extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding(StandardCharsets.UTF_8.name());
 		String submit = reqValues(request, new String[] {"clear", "save", "reload", "reloadNewFormat", "remove", "get", "getNewFormat" });
 		switch (submit) {
 		case "clear":
